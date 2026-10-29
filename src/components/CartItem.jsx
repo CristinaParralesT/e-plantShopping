@@ -15,87 +15,92 @@ function CartItem({ onContinueShopping }) {
     0
   );
 
-  const changeQuantity = (item, quantity) => {
+  const handleIncrement = (item) => {
     dispatch(
       updateQuantity({
         id: item.id,
         name: item.name,
-        quantity,
+        quantity: item.quantity + 1,
+      })
+    );
+  };
+
+  const handleDecrement = (item) => {
+    dispatch(
+      updateQuantity({
+        id: item.id,
+        name: item.name,
+        quantity: item.quantity - 1,
       })
     );
   };
 
   const handleRemove = (item) => {
-    dispatch(removeItem(item.id));
+    dispatch(removeItem(item.name));
+  };
+
+  const getBackToShopping = () => {
+    if (onContinueShopping) {
+      onContinueShopping();
+    }
   };
 
   return (
     <main className="catalog">
-      <p className="eyebrow">YOUR SELECTION</p>
       <h1>Shopping Cart</h1>
 
       {cartItems.length === 0 ? (
         <div className="empty-cart">
-          <p>Your cart is empty. Your plants are waiting!</p>
+          <p>Your cart is empty.</p>
           <button
             className="primary-button"
-            onClick={onContinueShopping}
+            onClick={getBackToShopping}
           >
             Continue Shopping
           </button>
         </div>
       ) : (
         <>
-          <div className="cart-list">
+          <div className="cart-container">
             {cartItems.map((item) => (
-              <article className="cart-item" key={item.id}>
+              <div className="cart-item" key={item.id}>
                 <img src={item.image} alt={item.name} />
 
                 <div className="cart-item-info">
                   <h3>{item.name}</h3>
-                  <p>${item.price.toFixed(2)} each</p>
+                  <p>Unit Price: ${item.price.toFixed(2)}</p>
 
                   <div className="quantity-controls">
-                    <button
-                      aria-label={`Decrease ${item.name}`}
-                      disabled={item.quantity <= 1}
-                      onClick={() =>
-                        changeQuantity(item, item.quantity - 1)
-                      }
-                    >
-                      −
+                    <button onClick={() => handleDecrement(item)}>
+                      -
                     </button>
 
                     <span>{item.quantity}</span>
 
-                    <button
-                      aria-label={`Increase ${item.name}`}
-                      onClick={() =>
-                        changeQuantity(item, item.quantity + 1)
-                      }
-                    >
+                    <button onClick={() => handleIncrement(item)}>
                       +
                     </button>
                   </div>
 
+                  <p>
+                    Subtotal: $
+                    {(item.price * item.quantity).toFixed(2)}
+                  </p>
+
                   <button
-                    className="remove-button"
+                    className="cart-item-delete"
                     onClick={() => handleRemove(item)}
                   >
-                    Remove
+                    Delete
                   </button>
                 </div>
-
-                <strong>
-                  ${(item.price * item.quantity).toFixed(2)}
-                </strong>
-              </article>
+              </div>
             ))}
           </div>
 
           <div className="cart-summary">
             <h2>Total: ${totalPrice.toFixed(2)}</h2>
-            <p>{totalItems} plant(s) in your cart</p>
+            <p>Total items: {totalItems}</p>
 
             <button
               className="primary-button"
@@ -106,7 +111,7 @@ function CartItem({ onContinueShopping }) {
 
             <button
               className="secondary-button"
-              onClick={onContinueShopping}
+              onClick={getBackToShopping}
             >
               Continue Shopping
             </button>
