@@ -1,10 +1,5 @@
-
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  increaseQuantity,
-  decreaseQuantity,
-  removeFromCart,
-} from '../CartSlice';
+import { removeItem, updateQuantity } from '../CartSlice';
 
 function CartItem({ onContinueShopping }) {
   const dispatch = useDispatch();
@@ -19,6 +14,20 @@ function CartItem({ onContinueShopping }) {
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+  const changeQuantity = (item, quantity) => {
+    dispatch(
+      updateQuantity({
+        id: item.id,
+        name: item.name,
+        quantity,
+      })
+    );
+  };
+
+  const handleRemove = (item) => {
+    dispatch(removeItem(item.id));
+  };
 
   return (
     <main className="catalog">
@@ -49,8 +58,9 @@ function CartItem({ onContinueShopping }) {
                   <div className="quantity-controls">
                     <button
                       aria-label={`Decrease ${item.name}`}
+                      disabled={item.quantity <= 1}
                       onClick={() =>
-                        dispatch(decreaseQuantity(item.id))
+                        changeQuantity(item, item.quantity - 1)
                       }
                     >
                       −
@@ -61,7 +71,7 @@ function CartItem({ onContinueShopping }) {
                     <button
                       aria-label={`Increase ${item.name}`}
                       onClick={() =>
-                        dispatch(increaseQuantity(item.id))
+                        changeQuantity(item, item.quantity + 1)
                       }
                     >
                       +
@@ -70,7 +80,7 @@ function CartItem({ onContinueShopping }) {
 
                   <button
                     className="remove-button"
-                    onClick={() => dispatch(removeFromCart(item.id))}
+                    onClick={() => handleRemove(item)}
                   >
                     Remove
                   </button>
@@ -89,7 +99,7 @@ function CartItem({ onContinueShopping }) {
 
             <button
               className="primary-button"
-              onClick={() => alert('Coming Soon!')}
+              onClick={() => window.alert('Coming Soon!')}
             >
               Checkout
             </button>
