@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import AboutUs from './components/AboutUs';
@@ -8,6 +7,7 @@ import './App.css';
 
 function App() {
   const [page, setPage] = useState('home');
+  const [showProductList, setShowProductList] = useState(false);
 
   const cartItems = useSelector((state) => state.cart.items);
 
@@ -16,8 +16,18 @@ function App() {
     0
   );
 
+  const handleGetStarted = () => {
+    setShowProductList(true);
+    setPage('plants');
+  };
+
+  const handleContinueShopping = () => {
+    setShowProductList(true);
+    setPage('plants');
+  };
+
   return (
-    <div className="app">
+    <div className="app-container">
       <header className="navbar">
         <button
           className="brand"
@@ -27,8 +37,14 @@ function App() {
         </button>
 
         <nav>
-          <button onClick={() => setPage('home')}>Home</button>
-          <button onClick={() => setPage('plants')}>Plants</button>
+          <button onClick={() => setPage('home')}>
+            Home
+          </button>
+
+          <button onClick={handleGetStarted}>
+            Plants
+          </button>
+
           <button onClick={() => setPage('cart')}>
             🛒 Cart ({totalItems})
           </button>
@@ -36,13 +52,18 @@ function App() {
       </header>
 
       {page === 'home' && (
-        <AboutUs onGetStarted={() => setPage('plants')} />
+        <main>
+          <h1>Welcome to Paradise Nursery</h1>
+          <AboutUs onGetStarted={handleGetStarted} />
+        </main>
       )}
 
-      {page === 'plants' && <ProductList />}
+      {page === 'plants' && showProductList && (
+        <ProductList />
+      )}
 
       {page === 'cart' && (
-        <CartItem onContinueShopping={() => setPage('plants')} />
+        <CartItem onContinueShopping={handleContinueShopping} />
       )}
 
       <footer>

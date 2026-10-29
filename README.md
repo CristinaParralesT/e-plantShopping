@@ -1,21 +1,43 @@
-<<<<<<< HEAD
-# React + Vite
+# e-plantShopping
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Paradise Nursery
 
-Currently, two official plugins are available:
+Paradise Nursery is a plant shopping application built with React. It allows users to explore indoor plants, add plants to their shopping cart, manage quantities, and view the total cost of their selected items.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Browse plants organized by category.
+- View plant images, names, and prices.
+- Add plants to the shopping cart.
+- Increase or decrease item quantities.
+- Remove items from the cart.
+- View the cart total and continue shopping.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Technologies Used
 
-## Expanding the ESLint configuration
+- React
+- JavaScript
+- Vite
+- Redux
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# paradise-nursery
-Paradise Nursery - Plant Shopping Cart Application
->>>>>>> 4681f12c3c92d56db914e3fbd76a0dd2a97f0b3f
+## Installation and Setup
+
+1. Clone this repository.
+2. Open the project folder in your terminal.
+3. Install the dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open the local URL displayed in your terminal.
+
+## Project Purpose
+
+This project demonstrates the use of React components, state management, and shopping cart functionality in an online plant nursery application.
