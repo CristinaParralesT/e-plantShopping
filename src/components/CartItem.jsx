@@ -11,7 +11,7 @@ function CartItem({ onContinueShopping }) {
   );
 
   const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
+    (total, item) => total + (item.cost ?? item.price) * item.quantity,
     0
   );
 
@@ -64,11 +64,18 @@ function CartItem({ onContinueShopping }) {
           <div className="cart-container">
             {cartItems.map((item) => (
               <div className="cart-item" key={item.id}>
-                <img src={item.image} alt={item.name} />
+                <img
+                  className="cart-item-image"
+                  src={item.image}
+                  alt={item.name}
+                />
 
-                <div className="cart-item-info">
+                <div className="cart-item-details">
                   <h3>{item.name}</h3>
-                  <p>Unit Price: ${item.price.toFixed(2)}</p>
+
+                  <p className="cart-item-price">
+                    Unit Price: ${(item.cost ?? item.price).toFixed(2)}
+                  </p>
 
                   <div className="quantity-controls">
                     <button onClick={() => handleDecrement(item)}>
@@ -82,16 +89,16 @@ function CartItem({ onContinueShopping }) {
                     </button>
                   </div>
 
-                  <p>
+                  <p className="cart-item-total">
                     Subtotal: $
-                    {(item.price * item.quantity).toFixed(2)}
+                    {((item.cost ?? item.price) * item.quantity).toFixed(2)}
                   </p>
 
                   <button
                     className="cart-item-delete"
                     onClick={() => handleRemove(item)}
                   >
-                    Delete
+                    Eliminar
                   </button>
                 </div>
               </div>
